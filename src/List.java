@@ -61,6 +61,10 @@ public class List {
 	public Object firstElement() {
 		return head.data;
 	}
+	
+	public Object currentElement() {
+		return current.data;
+	}
 
 	public void reset() {
 		current = head;
@@ -82,5 +86,12 @@ public class List {
 //		reset();
 
 		return s + ((close == "") ? " ]" : close);
+	}
+	
+	public boolean equals(Object obj) {
+		if(obj == current)
+			return true;
+		else 
+			return false;
 	}
 }

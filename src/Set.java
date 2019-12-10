@@ -10,5 +10,4 @@ public interface Set {
 	public String print();
 	public int size();
 	
-	
 }

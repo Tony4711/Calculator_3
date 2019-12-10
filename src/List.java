@@ -1,5 +1,4 @@
 
-
 public class List {
 
 	private Node head, current, previous;
@@ -53,6 +52,10 @@ public class List {
 		else
 			previous = previous.next;
 	}
+	
+	public void moveBack() {
+		current = previous;
+	}
 
 	public boolean isLastMember() {
 		return (current == null);
@@ -61,7 +64,7 @@ public class List {
 	public Object firstElement() {
 		return head.data;
 	}
-	
+
 	public Object currentElement() {
 		return current.data;
 	}
@@ -87,11 +90,15 @@ public class List {
 
 		return s + ((close == "") ? " ]" : close);
 	}
-	
+
 	public boolean equals(Object obj) {
-		if(obj == current)
+		if (current == null){
+			current = head;
+		}
+		System.out.println("cur: " + current.data + " == " +obj + " :object" + "?");
+		if(obj == current.data)
 			return true;
-		else 
+		else
 			return false;
 	}
 }

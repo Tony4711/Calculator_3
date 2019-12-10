@@ -1,6 +1,4 @@
 import org.junit.Test;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 import static org.junit.Assert.*;

@@ -9,7 +9,6 @@ public class SetAsList implements Set {
 
 	public void addAll(SetAsList list) {
 		Object listCurrent;
-		Object myListCurrent;
 		boolean found = false;
 		for (int a = 0; a < list.myList.getSize(); a++) {
 			if (list.myList.currentElement() == null)
@@ -18,9 +17,9 @@ public class SetAsList implements Set {
 				listCurrent = list.myList.currentElement();
 			for (int b = 0; b < myList.getSize(); b++) {
 				if (myList.equals(listCurrent)) {
-					found = true;
-					b = myList.getSize(); 
+					found = true; 
 					System.out.println("----------------------> found");
+					break;
 				}else
 					found = false;
 				if (!myList.isLastMember())
@@ -41,7 +40,6 @@ public class SetAsList implements Set {
 		if (!this.hasValue(obj)) {
 			myList.add(obj);
 			System.out.println("Added: " + obj);
-
 		}
 	}
 
@@ -67,14 +65,12 @@ public class SetAsList implements Set {
 				myList.moveOn();
 			System.out.println("false");
 		}
-
 		System.out.println(print());
 		return false;
 	}
 
 	public String print() {
 		return myList.print("{", "}");
-
 	}
 
 	public int size() {

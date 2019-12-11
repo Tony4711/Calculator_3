@@ -54,7 +54,6 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	protected HexUserInterface(CalcEngine engine) {
 		super(engine);
 		addHexInterface();
-		testSet();
 	}
 
 	private void addHexInterface() {

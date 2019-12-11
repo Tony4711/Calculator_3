@@ -10,6 +10,7 @@ public class Calculator
     private CalcEngine engine;
     //private UserInterface gui;
     private HexUserInterface hexGui;
+    private SetInterface setGui;
     
 	public static void main(String[] args) 
 	{
@@ -24,7 +25,8 @@ public class Calculator
     {
         engine = new CalcEngine();
         //gui = new UserInterface(engine);
-        hexGui = new HexUserInterface(engine);
+        //hexGui = new HexUserInterface(engine);
+        setGui = new SetInterface(engine);
     }
 
     /**
@@ -33,6 +35,7 @@ public class Calculator
     public void show()
     {
     	//gui.setVisible(true);
-        hexGui.setVisible(true);
+        //hexGui.setVisible(true);
+    	setGui.setVisible(true);
     }
 }

@@ -35,7 +35,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	protected String displayString = "";
 	// String for the second display showing decimal
 	protected String displayValue = "";
-	private Postfix post;
+	private Postfix postfixCalcEngine;
 	// left side of expression
 	private String lhs = "";
 	// right side of expression
@@ -53,6 +53,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 
 	protected HexUserInterface(CalcEngine engine) {
 		super(engine);
+		postfixCalcEngine = new Postfix();
 		addHexInterface();
 		testSet();
 	}
@@ -157,7 +158,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent event) {
-		post = new Postfix();
+		
 		
 		// /* If the negate button gets pressed do something
 		if(event.getSource() == this.negate) {
@@ -245,7 +246,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		else {
 			try {
 				// store the result as lhs for reusing
-				lhs = String.valueOf(post.evaluate(post.infixToPostfix(displayValue)));
+				lhs = String.valueOf(postfixCalcEngine.evaluate(postfixCalcEngine.infixToPostfix(displayValue)));
 				// display for decimal
 				displayValue += " = " + lhs;
 			} catch (StackUnderflow e) {
@@ -269,9 +270,9 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		} else {
 			try {
 				// store the result as lhs for reusing
-				lhs = String.valueOf(post.evaluate(post.infixToPostfix(displayString)));
+				lhs = String.valueOf(postfixCalcEngine.evaluate(postfixCalcEngine.infixToPostfix(displayString)));
 				// display for rpn
-				displayString = post.infixToPostfix(displayString) + " = " + lhs;
+				displayString = postfixCalcEngine.infixToPostfix(displayString) + " = " + lhs;
 				// display for decimal
 				displayValue += " = " + lhs;
 			} catch (StackUnderflow e) {
@@ -348,10 +349,10 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		} else {
 			try {
 				// store the result as lhs for reusing
-				lhs = String.valueOf(post.evaluate(post.infixToPostfix(displayValue)));
+				lhs = String.valueOf(postfixCalcEngine.evaluate(postfixCalcEngine.infixToPostfix(displayValue)));
 				if (isHexRpn)
 					// display for hex rpn
-					displayString = post.infixToPostfix(displayValue) + " = "
+					displayString = postfixCalcEngine.infixToPostfix(displayValue) + " = "
 							+ Integer.toHexString(Integer.parseInt(lhs)).toUpperCase();
 				else if (isHex)
 					// display for hex

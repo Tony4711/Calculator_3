@@ -87,7 +87,7 @@ public class UserInterface implements ActionListener {
 
 		contentPane.add(buttonPanel, BorderLayout.CENTER);
 
-		status = new JLabel(calc.getAuthor());
+		status = new JLabel(calc.getOldAuthorAndVersion());
 		contentPane.add(status, BorderLayout.SOUTH);
 
 		frame.pack();
@@ -111,6 +111,7 @@ public class UserInterface implements ActionListener {
 	 * 
 	 * @param event The event that has occured.
 	 */
+	@Override
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
 
@@ -148,9 +149,9 @@ public class UserInterface implements ActionListener {
 	 */
 	protected void showInfo() {
 		if (showingAuthor)
-			status.setText(calc.getVersion());
+			status.setText(calc.getNewAuthorAndVersion());
 		else
-			status.setText(calc.getAuthor());
+			status.setText(calc.getOldAuthorAndVersion());
 
 		showingAuthor = !showingAuthor;
 	}

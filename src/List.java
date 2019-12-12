@@ -95,7 +95,7 @@ public class List {
 		if (current == null){
 			current = head;
 		}
-		System.out.println("cur: " + current.data + " == " +obj + " :object" + "?");
+		//System.out.println("cur: " + current.data + " == " +obj + " :object" + "?");
 		if(obj == current.data)
 			return true;
 		else

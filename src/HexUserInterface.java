@@ -8,23 +8,23 @@ import java.awt.event.ItemListener;
 public class HexUserInterface extends UserInterface implements ActionListener {
 
 	// JPanel for the displays
-	private JPanel displayPanel;
+	protected JPanel displayPanel;
 	// JPanel for the hex buttons A-F
-	private JPanel hexButtonPanel;
+	protected JPanel hexButtonPanel;
 	// JPanel for the JComboBox
-	private JPanel boxPanel;
+	protected JPanel boxPanel;
 	// JComboBox for the operation mode
 	protected JComboBox<String> operationMode;
 	// /* Descriptive text for the displays
 	protected JLabel displayText1;
-	private JLabel displayText2;
+	protected JLabel displayText2;
 	// */
 	// First display showing values from the selected operation mode
 	private JTextField displayOperationMode;
 	// Variable to store the value from the event
-	private String command;
+	protected String command;
 	// String Array that stores the selections of the JComboBox
-	private String[] dropdownSelection = { "Regular", "HEX", "RPN", "HEX RPN"};
+	protected String[] dropdownSelection;
 	// int Array that stores the complementary values of A-F
 	final private int[] hexNumber = { 10, 11, 12, 13, 14, 15 };
 	// Character Array that stores the operators that can be used
@@ -37,29 +37,38 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	protected String displayValue = "";
 	private Postfix postfixCalcEngine;
 	// left side of expression
-	private String lhs = "";
+	protected String lhs = "";
 	// right side of expression
 	private String rhs = "";
 	// last used operator
 	private char lastOp;
 	// /* booleans to check selected operation mode
-	private boolean isDeci = true;
-	private boolean isHex = false;
-	private boolean isRpn = false;
-	private boolean isHexRpn = false;
+	protected boolean isDeci = true;
+	protected boolean isHex = false;
+	protected boolean isRpn = false;
+	protected boolean isHexRpn = false;
 	// */
-	private boolean done = false;
-	private boolean hasOperator = false;
+	protected boolean done = false;
+	protected boolean hasOperator = false;
 
 	protected HexUserInterface(CalcEngine engine) {
 		super(engine);
 		postfixCalcEngine = new Postfix();
+		setDropdownSelection();
 		addHexInterface();
+	}
+	
+	protected void setDropdownSelection() {
+		dropdownSelection = new String[4];
+		dropdownSelection[0] = "Regular";
+		dropdownSelection[1] = "HEX";
+		dropdownSelection[2] = "RPN";
+		dropdownSelection[3] = "HEX RPN";
 	}
 
 	private void addHexInterface() {
 
-		displayPanel = new JPanel(new GridLayout(4, 1));
+		displayPanel = new JPanel(new GridLayout(6, 1));
 		displayOperationMode = new JTextField();
 		// Blank descriptive text because it changes when an operation mode is selected
 		displayText1 = new JLabel("");
@@ -99,8 +108,9 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 					// /* Selecting the operation mode by setting the complementary boolean to true
 					// if the selected item was "Regular" set operation mode to regular
 					if (operationMode.getSelectedItem().toString().equals(dropdownSelection[0])) {
-						setPanelEnabled(hexButtonPanel, true);
+						setPanelEnabled(hexButtonPanel, false);
 						displayText1.setText("");
+						displayText2.setText("Regular");
 						isHex = false;
 						isRpn = false;
 						isDeci = true;
@@ -155,9 +165,9 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 
 		frame.pack();
 	}
-
+	
+	@Override
 	public void actionPerformed(ActionEvent event) {
-		
 		
 		// /* If the negate button gets pressed do something
 		if(event.getSource() == this.negate) {
@@ -239,8 +249,8 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	/*
 	 * display regular decimal expressions calculation uses rpn
 	 */
-	private void deci(Character c) {
-		if (!(c == '='))
+	protected void deci(Character c) {
+		if (!(c == '=') && !(c == '?'))
 			displayValue += command;
 		else {
 			try {
@@ -262,8 +272,8 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	/*
 	 * display rpn and regular expression
 	 */
-	private void rpn(Character c) {
-		if (!(c == '=')) {
+	protected void rpn(Character c) {
+		if (!(c == '=') && !(c == '?')) {
 			displayString += command;
 			displayValue = displayString;
 		} else {
@@ -292,12 +302,12 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	 * display regular hex and decimal expression or display rpn hex and regular
 	 * decimal expression
 	 */
-	private void hexRpn(Character c) {
+	protected void hexRpn(Character c) {
 		if (!(c == '=')) {
 			int value = 0;
 			// If ActionListener catches "DEL" do not add it to the displayString because it
 			// is not calculable
-			if (!(command == "DEL"))
+			if (!(command == "DEL") && !(command == "?"))
 				displayString += command;
 			if (Character.isDigit(c)) {
 				value = Character.getNumericValue(c);
@@ -373,13 +383,13 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	/*
 	 * Take the value of the display and negate it
 	 */
-	private void negate() {
+	protected void negate() {
 		int neg = Integer.parseInt(displayValue);
 		neg -= 2 * neg;
 		displayValue = String.valueOf(neg);
 	}
 	
-	private void checkOperator() {
+	protected void checkOperator() {
 		if (command.equals("DEL")) {
 			clear();
 			lhs = "";
@@ -388,7 +398,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 			showInfo();
 	}
 
-	private void clear() {
+	protected void clear() {
 		displayValue = "";
 		displayString = "";
 		rhs = "";
@@ -396,7 +406,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		lastOp = Character.MIN_VALUE;
 	}
 
-	private boolean isOperator(Character c) {
+	protected boolean isOperator(Character c) {
 
 		for (int i = 0; i < operator.length; i++)
 			if (c == operator[i]) {
@@ -420,6 +430,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		return false;
 	}
 	
+	@SuppressWarnings("unused")
 	private void testSet() {
 		SetAsList set = new SetAsList();
 		SetAsList set2 = new SetAsList();
@@ -441,7 +452,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		System.out.println(set.print());
 	}
 
-	private void redisplay() {
+	protected void redisplay() {
 		displayOperationMode.setText(displayString);
 		display.setText(displayValue);
 
@@ -454,7 +465,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	 * 
 	 * @author Kesavamoorthi
 	 */
-	void setPanelEnabled(JPanel panel, Boolean isEnabled) {
+	protected void setPanelEnabled(JPanel panel, Boolean isEnabled) {
 		panel.setEnabled(isEnabled);
 
 		Component[] components = panel.getComponents();

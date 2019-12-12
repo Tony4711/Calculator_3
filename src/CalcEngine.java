@@ -132,15 +132,15 @@ public class CalcEngine {
 	/**
 	 * @return The author of this engine.
 	 */
-	public String getAuthor() {
-		return "Alexej & Tony";
+	public String getOldAuthorAndVersion() {
+		return "Alexej & Tony | Version 2.0";
 	}
 
 	/**
 	 * @return The version number of this engine.
 	 */
-	public String getVersion() {
-		return "Version 2.0";
+	public String getNewAuthorAndVersion() {
+		return "Tony & Kenneth | Version 3.0";
 	}
 
 	/**

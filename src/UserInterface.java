@@ -111,6 +111,7 @@ public class UserInterface implements ActionListener {
 	 * 
 	 * @param event The event that has occured.
 	 */
+	@Override
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
 

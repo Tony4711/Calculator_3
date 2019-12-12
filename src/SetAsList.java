@@ -18,28 +18,28 @@ public class SetAsList implements Set {
 			for (int b = 0; b < myList.getSize(); b++) {
 				if (myList.equals(listCurrent)) {
 					found = true; 
-					System.out.println("----------------------> found");
+					//System.out.println("----------------------> found");
 					break;
 				}else
 					found = false;
 				if (!myList.isLastMember())
 					myList.moveOn();
-				System.out.println(">> myList done");
+				//System.out.println(">> myList done");
 			}
 			if(!found) {
 				myList.add(listCurrent);
-				System.out.println(">> added");
+				//System.out.println(">> added");
 			}
 			if (!list.myList.isLastMember())
 				list.myList.moveOn();
-			System.out.println("----------------------> list done");
+			//System.out.println("----------------------> list done");
 		}
 	}
 
 	public void insert(Object obj) {
 		if (!this.hasValue(obj)) {
 			myList.add(obj);
-			System.out.println("Added: " + obj);
+			//System.out.println("Added: " + obj);
 		}
 	}
 
@@ -54,18 +54,18 @@ public class SetAsList implements Set {
 
 	public boolean hasValue(Object obj) {
 		List iterator = myList;
-		System.out.println("\n");
+		//System.out.println("\n");
 		for (int i = 0; i < iterator.getSize(); i++) {
-			System.out.println("index: " + i);
+			//System.out.println("index: " + i);
 			if (iterator.equals(obj)) {
-				System.out.println("true");
+				//System.out.println("true");
 				return true;
 			}
 			if (!myList.isLastMember())
 				myList.moveOn();
-			System.out.println("false");
+			//System.out.println("false");
 		}
-		System.out.println(print());
+		//System.out.println(print());
 		return false;
 	}
 

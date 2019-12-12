@@ -3,15 +3,28 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Collections;
+import java.util.Scanner;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class SetInterface extends HexUserInterface {
 
 	private JPanel setPanel;
 	private boolean isSet = false;
 
+	private SetAsList set1 = new SetAsList();
+	private SetAsList set2 = new SetAsList();
+	private SetAsList set3 = new SetAsList();
+	
+	private JTextField finalSet;
+	private JLabel finalSetLabel;
+	
+	private String finalSetValue;
+	
 	public SetInterface(CalcEngine engine) {
 		super(engine);
 		addSetInterface();
@@ -29,13 +42,26 @@ public class SetInterface extends HexUserInterface {
 	}
 
 	private void addSetInterface() {
-		setPanel = new JPanel(new GridLayout(6, 1));
-		addButton(setPanel, "Set1 done");
-		addButton(setPanel, "Set2 done");
+
+		finalSetLabel = new JLabel("");
+		displayPanel.add(finalSetLabel);
+		finalSet = new JTextField();
+		displayPanel.add(finalSet);
+		
+		
+		
+		setPanel = new JPanel(new GridLayout(5, 2));
+		addButton(setPanel, "{");
+		addButton(setPanel, "}");
 		addButton(setPanel, ",");
+		addButton(setPanel, "add to Set1");
 		addButton(setPanel, "add Set");
-		addButton(setPanel, "substract Set");
+		addButton(setPanel, "clear Set1");
+		addButton(setPanel, "subtract Set");
+		addButton(setPanel, "add to Set2");
 		addButton(setPanel, "intersect Set");
+		addButton(setPanel, "clear Set2");
+		
 		contentPane.add(boxPanel, BorderLayout.SOUTH);
 		contentPane.add(setPanel, BorderLayout.EAST);
 		setPanelEnabled(setPanel, false);
@@ -48,6 +74,7 @@ public class SetInterface extends HexUserInterface {
 						setPanelEnabled(setPanel, true);
 						displayText1.setText(dropdownSelection[4]+"1");
 						displayText2.setText(dropdownSelection[4]+"2");
+						finalSetLabel.setText("Final Set");
 						isHex = false;
 						isRpn = false;
 						isDeci = false;
@@ -55,8 +82,11 @@ public class SetInterface extends HexUserInterface {
 						isSet = true;
 						command = "DEL";
 						checkOperator();
-					}else
+					}else {
+						finalSetLabel.setText("");
 						setPanelEnabled(setPanel, false);
+						}
+						
 				}
 			}
 		});
@@ -69,7 +99,7 @@ public class SetInterface extends HexUserInterface {
 				if(event.getSource() == this.negate) {
 					// Can't negate nothing
 					if(displayValue.length() == 0) {
-						displayValue = "Firt insert a digit and if wanted use +/- to negate";
+						displayValue = "First insert a digit and if want use +/- to negate";
 						redisplay();
 						// to reset the display when the next button gets pressed
 						done = true;
@@ -88,6 +118,7 @@ public class SetInterface extends HexUserInterface {
 						return;
 					}
 				}
+				
 				// */
 				
 				command = event.getActionCommand();
@@ -137,22 +168,155 @@ public class SetInterface extends HexUserInterface {
 				else if (isHexRpn || isHex)
 					hexRpn(c);
 				else if (isSet)
-					set(command);
-				// */
-				
+					set(c);
+
 				checkOperator();
 				redisplay();
 	}
-	
-	private void set(String command) {
-		if (!(command == "Set1 done")) {
-			displayString = "{}";
-			displayString += displayString.substring(0, displayString.length()-1) + command + "}";
+
+	private void set(Character c) {
+		if (!(c == '=')) {
+			if (!(command == "DEL") &&
+				!(command == "?") &&
+				!(command == "add to Set1") && 
+				!(command == "add to Set2") &&
+				!(command == "add Set") &&
+				!(command == "subtract Set") &&
+				!(command == "intersect Set") &&
+				!(command == "clear Set1") &&
+				!(command == "clear Set2"))
+			{
+				finalSetValue += command;
+			}
 			
-		} else {
+			if (command == "add to Set1") 
+			{
+				Scanner scn = new Scanner(finalSetValue.replaceAll(",", " ").replace("{", " ").replace("}", " "));
+				while (scn.hasNextInt()) 
+				{
+					int i = scn.nextInt();
+					set1.insert(i);
+				}
+				scn.close();
+				displayString = set1.print();
+				finalSetValue = "";
+			}
+			else if (command == "add to Set2") 
+			{
+				Scanner scn = new Scanner(finalSetValue.replaceAll(",", " ").replace("{", " ").replace("}", " "));
+				while (scn.hasNextInt()) 
+				{
+					set2.insert(scn.nextInt());
+				}
+				scn.close();
+				displayValue = set2.print();
+				finalSetValue = "";
+				
+			}
+			else if (command == "add Set") 
+			{
+				set3 = set3.addAll(set1, set2);
+				finalSetValue = set3.print();
+			}
+			else if (command == "subtract Set") 
+			{
+				set3 = set3.subtract(set1, set2);
+				finalSetValue = set3.print();
+			}
+			else if (command == "intersect Set") 
+			{
+				set3 = set3.intersection(set1, set2);
+				finalSetValue = set3.print();
+			}
+			else if (command == "clear Set1") 
+			{
+				set1 = new SetAsList();
+				displayString = "";
+			}
+			else if (command == "clear Set2") 
+			{
+				set2 = new SetAsList();
+				displayValue = "";
+			}
+			else if(command == "DEL")
+			{
+				displayString = "";
+				displayValue = "";
+				finalSetValue = "";
+				
+				set1 = new SetAsList();
+				set2 = new SetAsList();
+				set3 = new SetAsList();
+			}
+		} 
+		else
+		{
 			
 		}
+		
 	}
+
+//	public SetAsList addAll(SetAsList list1, SetAsList list2) 
+//	{
+//		Object listCurrent;
+//		boolean found = false;
+//		
+//		SetAsList newList = copy(list1);
+//		
+//		list2.reset();
+//		newList.reset();
+//		
+//		for (int i = 0; i < list2.size(); i++) 
+//		{
+//				listCurrent = list2.currentElement();
+//			
+//			for(int j = 0; j < newList.size(); j++) 
+//			{
+//				if (newList.currentElement().equals(listCurrent)) 
+//				{
+//					found = true;
+//					break;
+//				}
+//				else
+//					found = false;
+//				
+//				if (!newList.isLastMember())
+//					newList.moveOn();
+//				
+//				if (!found)
+//					newList.insert(listCurrent);
+//			}
+//			
+//			if (!list2.isLastMember())
+//				list2.moveOn();
+//		}
+//		System.out.println("New complete List: " + newList.print());
+//		return newList;
+//		
+//	}
+//	
+//	
+//	public SetAsList copy(SetAsList list) 
+//	{
+//		SetAsList newList = new SetAsList();
+//		Object listCurrent;
+//		
+//		list.reset();
+//		
+//		for (int i = 0; i < list.size(); i++ ) 
+//		{
+//			listCurrent = list.currentElement();
+//			newList.insert(listCurrent);
+//			
+//			if (!list.isLastMember())
+//				list.moveOn();
+//			else
+//				break;
+//		}
+//		System.out.println("List 1: " + list.print());
+//		System.out.println("New List: " + newList.print());
+//		return newList;
+//	}
 
 	private void testSet() {
 		SetAsList set = new SetAsList();
@@ -173,5 +337,16 @@ public class SetInterface extends HexUserInterface {
 		System.out.println();
 		set.addAll(set2);
 		System.out.println(set.print());
+	}
+	
+	protected void clear() {
+		super.clear();
+		finalSetValue = "";
+	}
+	
+	protected void redisplay() {
+		super.redisplay();
+		finalSet.setText(finalSetValue);
+
 	}
 }

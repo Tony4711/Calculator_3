@@ -8,7 +8,7 @@ import java.awt.event.ItemListener;
 public class HexUserInterface extends UserInterface implements ActionListener {
 
 	// JPanel for the displays
-	private JPanel displayPanel;
+	protected JPanel displayPanel;
 	// JPanel for the hex buttons A-F
 	protected JPanel hexButtonPanel;
 	// JPanel for the JComboBox
@@ -68,7 +68,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 
 	private void addHexInterface() {
 
-		displayPanel = new JPanel(new GridLayout(4, 1));
+		displayPanel = new JPanel(new GridLayout(6, 1));
 		displayOperationMode = new JTextField();
 		// Blank descriptive text because it changes when an operation mode is selected
 		displayText1 = new JLabel("");
@@ -110,6 +110,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 					if (operationMode.getSelectedItem().toString().equals(dropdownSelection[0])) {
 						setPanelEnabled(hexButtonPanel, false);
 						displayText1.setText("");
+						displayText2.setText("Regular");
 						isHex = false;
 						isRpn = false;
 						isDeci = true;
@@ -249,7 +250,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	 * display regular decimal expressions calculation uses rpn
 	 */
 	protected void deci(Character c) {
-		if (!(c == '='))
+		if (!(c == '=') && !(c == '?'))
 			displayValue += command;
 		else {
 			try {
@@ -272,7 +273,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	 * display rpn and regular expression
 	 */
 	protected void rpn(Character c) {
-		if (!(c == '=')) {
+		if (!(c == '=') && !(c == '?')) {
 			displayString += command;
 			displayValue = displayString;
 		} else {
@@ -306,7 +307,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 			int value = 0;
 			// If ActionListener catches "DEL" do not add it to the displayString because it
 			// is not calculable
-			if (!(command == "DEL"))
+			if (!(command == "DEL") && !(command == "?"))
 				displayString += command;
 			if (Character.isDigit(c)) {
 				value = Character.getNumericValue(c);
@@ -429,6 +430,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		return false;
 	}
 	
+	@SuppressWarnings("unused")
 	private void testSet() {
 		SetAsList set = new SetAsList();
 		SetAsList set2 = new SetAsList();

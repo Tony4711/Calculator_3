@@ -1,11 +1,14 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class SetInterface extends HexUserInterface{
 	
 	private JButton flag;
+	public String[] dropdownSelection = { "Regular", "HEX", "RPN", "HEX RPN", "Set"};
 	
 	public SetInterface(CalcEngine engine) {
 		super(engine);
@@ -17,7 +20,57 @@ public class SetInterface extends HexUserInterface{
 		flag = new JButton(",");
 		buttonPanel.add(flag);
 		
-		operationMode.addItem("Set");
+		operationMode.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				// If the event is equal to selecting an item do something
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					// /* Selecting the operation mode by setting the complementary boolean to true
+					// if the selected item was "Regular" set operation mode to regular
+					if (operationMode.getSelectedItem().toString().equals(dropdownSelection[0])) {
+						setPanelEnabled(hexButtonPanel, true);
+						displayText1.setText("");
+						isHex = false;
+						isRpn = false;
+						isDeci = true;
+						isHexRpn = false;
+						command = "DEL";
+						checkOperator();
+						// if the selected item was "HEX" set operation mode to hex
+					} else if (operationMode.getSelectedItem().toString().equals(dropdownSelection[1])) {
+						setPanelEnabled(hexButtonPanel, true);
+						displayText1.setText(dropdownSelection[1]);
+						isHex = true;
+						isRpn = false;
+						isDeci = false;
+						isHexRpn = false;
+						command = "DEL";
+						checkOperator();
+						// if the selected item was "RPN" set operation mode to rpn
+					} else if (operationMode.getSelectedItem().toString().equals(dropdownSelection[2])) {
+						setPanelEnabled(hexButtonPanel, false);
+						displayText1.setText(dropdownSelection[2]);
+						isHex = false;
+						isRpn = true;
+						isDeci = false;
+						isHexRpn = false;
+						command = "DEL";
+						checkOperator();
+						// if the selected item was "HEX RPN" set operation mode to hexRpn
+					} else if (operationMode.getSelectedItem().toString().equals(dropdownSelection[3])) {
+						setPanelEnabled(hexButtonPanel, true);
+						displayText1.setText(dropdownSelection[3]);
+						isHex = false;
+						isRpn = false;
+						isDeci = false;
+						isHexRpn = true;
+						command = "DEL";
+						checkOperator();
+					}
+					// */
+				}
+			}
+		});
+		// */
 		
 		frame.pack();
 		

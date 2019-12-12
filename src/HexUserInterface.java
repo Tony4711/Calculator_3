@@ -10,21 +10,21 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	// JPanel for the displays
 	private JPanel displayPanel;
 	// JPanel for the hex buttons A-F
-	private JPanel hexButtonPanel;
+	protected JPanel hexButtonPanel;
 	// JPanel for the JComboBox
 	private JPanel boxPanel;
 	// JComboBox for the operation mode
 	protected JComboBox<String> operationMode;
 	// /* Descriptive text for the displays
 	protected JLabel displayText1;
-	private JLabel displayText2;
+	protected JLabel displayText2;
 	// */
 	// First display showing values from the selected operation mode
-	private JTextField displayOperationMode;
+	protected JTextField displayOperationMode;
 	// Variable to store the value from the event
-	private String command;
+	protected String command;
 	// String Array that stores the selections of the JComboBox
-	private String[] dropdownSelection = { "Regular", "HEX", "RPN", "HEX RPN"};
+	protected String[] dropdownSelection = { "Regular", "HEX", "RPN", "HEX RPN"};
 	// int Array that stores the complementary values of A-F
 	final private int[] hexNumber = { 10, 11, 12, 13, 14, 15 };
 	// Character Array that stores the operators that can be used
@@ -35,7 +35,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	protected String displayString = "";
 	// String for the second display showing decimal
 	protected String displayValue = "";
-	private Postfix postfixCalcEngine;
+	private PostfixCalcEngine postfixCalcEngine;
 	// left side of expression
 	private String lhs = "";
 	// right side of expression
@@ -43,17 +43,17 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 	// last used operator
 	private char lastOp;
 	// /* booleans to check selected operation mode
-	private boolean isDeci = true;
-	private boolean isHex = false;
-	private boolean isRpn = false;
-	private boolean isHexRpn = false;
+	protected boolean isDeci = true;
+	protected boolean isHex = false;
+	protected boolean isRpn = false;
+	protected boolean isHexRpn = false;
 	// */
 	private boolean done = false;
 	private boolean hasOperator = false;
 
 	protected HexUserInterface(CalcEngine engine) {
 		super(engine);
-		postfixCalcEngine = new Postfix();
+		postfixCalcEngine = new PostfixCalcEngine();
 		addHexInterface();
 	}
 
@@ -379,7 +379,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		displayValue = String.valueOf(neg);
 	}
 	
-	private void checkOperator() {
+	protected void checkOperator() {
 		if (command.equals("DEL")) {
 			clear();
 			lhs = "";

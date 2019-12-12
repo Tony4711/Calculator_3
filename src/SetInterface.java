@@ -50,7 +50,7 @@ public class SetInterface extends HexUserInterface {
 		
 		
 		
-		setPanel = new JPanel(new GridLayout(5, 2));
+		setPanel = new JPanel(new GridLayout(6, 2));
 		addButton(setPanel, "{");
 		addButton(setPanel, "}");
 		addButton(setPanel, ",");
@@ -61,6 +61,7 @@ public class SetInterface extends HexUserInterface {
 		addButton(setPanel, "add to Set2");
 		addButton(setPanel, "intersect Set");
 		addButton(setPanel, "clear Set2");
+		addButton(setPanel, "clear final Set");
 		
 		contentPane.add(boxPanel, BorderLayout.SOUTH);
 		contentPane.add(setPanel, BorderLayout.EAST);
@@ -184,7 +185,8 @@ public class SetInterface extends HexUserInterface {
 				!(command == "subtract Set") &&
 				!(command == "intersect Set") &&
 				!(command == "clear Set1") &&
-				!(command == "clear Set2"))
+				!(command == "clear Set2") &&
+				!(command == "clear final Set"))
 			{
 				finalSetValue += command;
 			}
@@ -226,6 +228,9 @@ public class SetInterface extends HexUserInterface {
 			else if (command == "intersect Set") 
 			{
 				set3 = set3.intersection(set1, set2);
+				if (set3.isEmpty())
+					finalSetValue = "There is no intersection between these two Sets";
+				else
 				finalSetValue = set3.print();
 			}
 			else if (command == "clear Set1") 
@@ -237,6 +242,11 @@ public class SetInterface extends HexUserInterface {
 			{
 				set2 = new SetAsList();
 				displayValue = "";
+			}
+			else if (command == "clear final Set") 
+			{
+				set3 = new SetAsList();
+				finalSetValue = "";
 			}
 			else if(command == "DEL")
 			{

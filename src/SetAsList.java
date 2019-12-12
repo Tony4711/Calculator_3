@@ -73,7 +73,6 @@ public class SetAsList implements Set {
 			if (!list2.isLastMember())
 				list2.moveOn();
 		}
-		System.out.println("New complete List: " + finalList.print());
 		return finalList;
 		
 	}
@@ -96,8 +95,6 @@ public class SetAsList implements Set {
 			else
 				break;
 		}
-//		System.out.println("List 1: " + list.print());
-//		System.out.println("New List: " + newList.print());
 		return newList;
 	}
 	

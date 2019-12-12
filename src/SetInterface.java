@@ -30,17 +30,15 @@ public class SetInterface extends HexUserInterface {
 
 	private void addSetInterface() {
 		setPanel = new JPanel(new GridLayout(6, 1));
-		addButton(setPanel, "{");
+		addButton(setPanel, "Set1 done");
+		addButton(setPanel, "Set2 done");
 		addButton(setPanel, ",");
-		addButton(setPanel, "}");
 		addButton(setPanel, "add Set");
 		addButton(setPanel, "substract Set");
 		addButton(setPanel, "intersect Set");
 		contentPane.add(boxPanel, BorderLayout.SOUTH);
 		contentPane.add(setPanel, BorderLayout.EAST);
 		setPanelEnabled(setPanel, false);
-		
-
 		
 		operationMode.addItemListener((ItemListener) new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -139,17 +137,18 @@ public class SetInterface extends HexUserInterface {
 				else if (isHexRpn || isHex)
 					hexRpn(c);
 				else if (isSet)
-					testSet();
+					set(command);
 				// */
 				
 				checkOperator();
 				redisplay();
 	}
 	
-	private void set(Character c) {
-		if (!(c == '=')) {
-			displayString += command;
-			displayValue = displayString;
+	private void set(String command) {
+		if (!(command == "Set1 done")) {
+			displayString = "{}";
+			displayString += displayString.substring(0, displayString.length()-1) + command + "}";
+			
 		} else {
 			
 		}

@@ -1,7 +1,11 @@
 
 import java.util.Scanner;
 
+<<<<<<< Updated upstream:src/PostfixCalcEngine.java
 public class PostfixCalcEngine {
+=======
+public class Postfix {
+>>>>>>> Stashed changes:src/Postfix.java
 
 	private StackAsList postFixStack;
 	private StackAsList expression;
@@ -9,6 +13,13 @@ public class PostfixCalcEngine {
 	private Scanner scanner = new Scanner(System.in);
 	final private Character flagChar = '_';
 
+<<<<<<< Updated upstream:src/PostfixCalcEngine.java
+=======
+	public static void main(String[] args) throws StackUnderflow, StackOverflow {
+		// Postfix fix = new Postfix();
+	}
+
+>>>>>>> Stashed changes:src/Postfix.java
 	public void run(String infix) throws StackUnderflow, StackOverflow {
 		String post = infixToPostfix(infix);
 		if (post == "Invalid Expression")

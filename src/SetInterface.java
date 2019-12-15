@@ -55,11 +55,11 @@ public class SetInterface extends HexUserInterface {
 		addButton(setPanel, "}");
 		addButton(setPanel, ",");
 		addButton(setPanel, "add to Set1");
-		addButton(setPanel, "add Set");
+		addButton(setPanel, "union Sets");
 		addButton(setPanel, "clear Set1");
-		addButton(setPanel, "subtract Set");
+		addButton(setPanel, "subtract Sets");
 		addButton(setPanel, "add to Set2");
-		addButton(setPanel, "intersect Set");
+		addButton(setPanel, "intersect Sets");
 		addButton(setPanel, "clear Set2");
 		addButton(setPanel, "clear final Set");
 		
@@ -71,7 +71,7 @@ public class SetInterface extends HexUserInterface {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					if (operationMode.getSelectedItem().toString().equals(dropdownSelection[4])) {
-						setPanelEnabled(hexButtonPanel, true);
+//						setPanelEnabled(hexButtonPanel, true);
 						setPanelEnabled(setPanel, true);
 						displayText1.setText(dropdownSelection[4]+"1");
 						displayText2.setText(dropdownSelection[4]+"2");
@@ -181,9 +181,9 @@ public class SetInterface extends HexUserInterface {
 				!(command == "?") &&
 				!(command == "add to Set1") && 
 				!(command == "add to Set2") &&
-				!(command == "add Set") &&
-				!(command == "subtract Set") &&
-				!(command == "intersect Set") &&
+				!(command == "union Sets") &&
+				!(command == "subtract Sets") &&
+				!(command == "intersect Sets") &&
 				!(command == "clear Set1") &&
 				!(command == "clear Set2") &&
 				!(command == "clear final Set"))
@@ -215,21 +215,21 @@ public class SetInterface extends HexUserInterface {
 				finalSetValue = "";
 				
 			}
-			else if (command == "add Set") 
+			else if (command == "union Sets") 
 			{
 				set3 = set3.addAll(set1, set2);
 				finalSetValue = set3.print();
 			}
-			else if (command == "subtract Set") 
+			else if (command == "subtract Sets") 
 			{
 				set3 = set3.subtract(set1, set2);
 				finalSetValue = set3.print();
 			}
-			else if (command == "intersect Set") 
+			else if (command == "intersect Sets") 
 			{
 				set3 = set3.intersection(set1, set2);
 				if (set3.isEmpty())
-					finalSetValue = "There is no intersection between these two Sets";
+					finalSetValue = "There is no intersection of these two Sets";
 				else
 				finalSetValue = set3.print();
 			}
@@ -262,72 +262,10 @@ public class SetInterface extends HexUserInterface {
 		else
 		{
 			
-		}
-		
+		}	
 	}
 
-//	public SetAsList addAll(SetAsList list1, SetAsList list2) 
-//	{
-//		Object listCurrent;
-//		boolean found = false;
-//		
-//		SetAsList newList = copy(list1);
-//		
-//		list2.reset();
-//		newList.reset();
-//		
-//		for (int i = 0; i < list2.size(); i++) 
-//		{
-//				listCurrent = list2.currentElement();
-//			
-//			for(int j = 0; j < newList.size(); j++) 
-//			{
-//				if (newList.currentElement().equals(listCurrent)) 
-//				{
-//					found = true;
-//					break;
-//				}
-//				else
-//					found = false;
-//				
-//				if (!newList.isLastMember())
-//					newList.moveOn();
-//				
-//				if (!found)
-//					newList.insert(listCurrent);
-//			}
-//			
-//			if (!list2.isLastMember())
-//				list2.moveOn();
-//		}
-//		System.out.println("New complete List: " + newList.print());
-//		return newList;
-//		
-//	}
-//	
-//	
-//	public SetAsList copy(SetAsList list) 
-//	{
-//		SetAsList newList = new SetAsList();
-//		Object listCurrent;
-//		
-//		list.reset();
-//		
-//		for (int i = 0; i < list.size(); i++ ) 
-//		{
-//			listCurrent = list.currentElement();
-//			newList.insert(listCurrent);
-//			
-//			if (!list.isLastMember())
-//				list.moveOn();
-//			else
-//				break;
-//		}
-//		System.out.println("List 1: " + list.print());
-//		System.out.println("New List: " + newList.print());
-//		return newList;
-//	}
-
+	@SuppressWarnings("unused")
 	private void testSet() {
 		SetAsList set = new SetAsList();
 		SetAsList set2 = new SetAsList();

@@ -80,6 +80,7 @@ public class SetInterface extends HexUserInterface {
 						isHexRpn = false;
 						isSet = true;
 						command = "DEL";
+						checkOperator();
 					}else {
 						finalSetLabel.setText("");
 						setPanelEnabled(setPanel, false);
@@ -203,7 +204,7 @@ public class SetInterface extends HexUserInterface {
 			}
 			else if (command == "add to Set2") 
 			{
-				Scanner scn = new Scanner(finalSetValue.replaceAll(",", " ").replace("{", " ").replace("}", " "));
+				Scanner scn = new Scanner(finalSetValue.replaceAll(",", " ").replace("(","").replace(")","").replace("{", " ").replace("}", " "));
 				while (scn.hasNextInt()) 
 				{
 					set2.insert(scn.nextInt());

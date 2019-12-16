@@ -59,7 +59,7 @@ public class SetAsList implements Set {
 			{
 				if (finalList.currentElement().equals(listCurrent)) 
 				{
-					found = true;
+					//found = true;
 					break;
 				}
 				else
@@ -68,7 +68,7 @@ public class SetAsList implements Set {
 				if (!finalList.isLastMember())
 					finalList.moveOn();
 				
-				if (!found)
+				//if (!found)
 					finalList.insert(listCurrent);
 			}
 			

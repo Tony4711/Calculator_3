@@ -95,9 +95,11 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		setPanelEnabled(hexButtonPanel, false);
 
 		// /* Creating JComboBox for the operation modes and adding it to the boxPanel
-		boxPanel = new JPanel();
+		boxPanel = new JPanel(new FlowLayout());
 		operationMode = new JComboBox<>(dropdownSelection);
+		boxPanel.add(status);
 		boxPanel.add(operationMode);
+		
 		// */
 
 		// /* ItemListener for the JComboBox
@@ -160,7 +162,7 @@ public class HexUserInterface extends UserInterface implements ActionListener {
 		// /* Adding everything to the contentPane
 		contentPane.add(displayPanel, BorderLayout.NORTH);
 		buttonPanel.add(hexButtonPanel);
-		contentPane.add(boxPanel, BorderLayout.EAST);
+		contentPane.add(boxPanel, BorderLayout.SOUTH);
 		// */
 
 		frame.pack();

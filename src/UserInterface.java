@@ -17,7 +17,7 @@ public class UserInterface implements ActionListener {
 
 	protected JFrame frame;
 	protected JTextField display;
-	private JLabel status;
+	protected JLabel status;
 	protected JPanel buttonPanel;
 	protected JPanel operatorPanel;
 	protected JPanel digitPanel;
@@ -50,6 +50,7 @@ public class UserInterface implements ActionListener {
 	 */
 	private void makeFrame() {
 		frame = new JFrame(calc.getTitle());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		contentPane = (JPanel) frame.getContentPane();
 		contentPane.setLayout(new BorderLayout(8, 8));
@@ -95,7 +96,7 @@ public class UserInterface implements ActionListener {
 		
 		contentPane.add(buttonPanel, BorderLayout.CENTER);
 
-		status = new JLabel(calc.getOldAuthorAndVersion());
+		status = new JLabel(calc.getNewAuthorAndVersion());
 		contentPane.add(status, BorderLayout.SOUTH);
 
 		frame.pack();
@@ -157,9 +158,9 @@ public class UserInterface implements ActionListener {
 	 */
 	protected void showInfo() {
 		if (showingAuthor)
-			status.setText(calc.getNewAuthorAndVersion());
-		else
 			status.setText(calc.getOldAuthorAndVersion());
+		else
+			status.setText(calc.getNewAuthorAndVersion());
 
 		showingAuthor = !showingAuthor;
 	}

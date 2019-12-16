@@ -44,8 +44,7 @@ public class SetInterface extends HexUserInterface {
 		displayPanel.add(finalSetLabel);
 		finalSet = new JTextField();
 		displayPanel.add(finalSet);
-		
-		
+	
 		
 		setPanel = new JPanel(new GridLayout(6, 2));
 		addButton(setPanel, "{");
@@ -61,7 +60,7 @@ public class SetInterface extends HexUserInterface {
 		addButton(setPanel, "clear final Set");
 		
 		contentPane.add(boxPanel, BorderLayout.SOUTH);
-		contentPane.add(setPanel, BorderLayout.EAST);
+		buttonPanel.add(setPanel, BorderLayout.EAST);
 		setPanelEnabled(setPanel, false);
 		
 		// /* Add new selection to the menu
@@ -268,6 +267,7 @@ public class SetInterface extends HexUserInterface {
 	private void testSet() {
 		SetAsList set = new SetAsList();
 		SetAsList set2 = new SetAsList();
+		SetAsList set3 = new SetAsList();
 		set.insert(11);
 		set.insert(12);
 		set.insert(13);
@@ -282,7 +282,7 @@ public class SetInterface extends HexUserInterface {
 		set2.insert(13);
 		set2.insert(12);
 		System.out.println();
-		set.addAll(set2);
+		set3.addAll(set1,set2);
 		System.out.println(set.print());
 	}
 	

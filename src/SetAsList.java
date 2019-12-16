@@ -8,8 +8,10 @@ public class SetAsList implements Set {
 		myList = new List();
 	}
 
-	
-	public void addAll(SetAsList list) {
+	/*
+	 * old version
+	 */
+	/*public void addAll(SetAsList list) {
 		Object listCurrent;
 		boolean found = false;
 		for (int a = 0; a < list.myList.getSize(); a++) {
@@ -36,7 +38,7 @@ public class SetAsList implements Set {
 				list.myList.moveOn();
 			//System.out.println("----------------------> list done");
 		}
-	}
+	}*/
 	
 	public SetAsList addAll(SetAsList list1, SetAsList list2) 
 	{

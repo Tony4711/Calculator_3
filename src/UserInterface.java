@@ -19,6 +19,8 @@ public class UserInterface implements ActionListener {
 	protected JTextField display;
 	private JLabel status;
 	protected JPanel buttonPanel;
+	protected JPanel operatorPanel;
+	protected JPanel digitPanel;
 	protected JPanel contentPane;
 	protected JButton negate;
 
@@ -56,35 +58,41 @@ public class UserInterface implements ActionListener {
 		display = new JTextField();
 		contentPane.add(display, BorderLayout.NORTH);
 
-		buttonPanel = new JPanel(new GridLayout(6, 4));
-		addButton(buttonPanel, "7");
-		addButton(buttonPanel, "8");
-		addButton(buttonPanel, "9");
-		addButton(buttonPanel, "^");
+		buttonPanel = new JPanel(new FlowLayout());
+		operatorPanel = new JPanel(new GridLayout(6,1));
+		digitPanel = new JPanel(new GridLayout(6,3));
+		addButton(digitPanel, "7");
+		addButton(digitPanel, "8");
+		addButton(digitPanel, "9");
+		addButton(operatorPanel, "^");
 
-		addButton(buttonPanel, "4");
-		addButton(buttonPanel, "5");
-		addButton(buttonPanel, "6");
-		addButton(buttonPanel, "*");
+		addButton(digitPanel, "4");
+		addButton(digitPanel, "5");
+		addButton(digitPanel, "6");
+		addButton(operatorPanel, "*");
 
-		addButton(buttonPanel, "1");
-		addButton(buttonPanel, "2");
-		addButton(buttonPanel, "3");
-		addButton(buttonPanel, "-");
+		addButton(digitPanel, "1");
+		addButton(digitPanel, "2");
+		addButton(digitPanel, "3");
+		addButton(operatorPanel, "-");
 
-		addButton(buttonPanel, "(");
-		addButton(buttonPanel, "0");
-		addButton(buttonPanel, ")");
+		addButton(digitPanel, "(");
+		addButton(digitPanel, "0");
+		addButton(digitPanel, ")");
 
 		
-		addButton(buttonPanel, "+");
+		addButton(operatorPanel, "+");
 		buttonPanel.add(new JLabel(" "));
-		addButton(buttonPanel, "?");
-		addButton(buttonPanel, "DEL");
-		addButton(buttonPanel, "=");
+		addButton(digitPanel, "?");
+		addButton(digitPanel, "DEL");
+		addButton(operatorPanel, "=");
 		negate = new JButton("+/-");
-		buttonPanel.add(negate);
-
+		operatorPanel.add(negate);
+		
+		buttonPanel.add(digitPanel);
+		buttonPanel.add(operatorPanel);
+		
+		
 		contentPane.add(buttonPanel, BorderLayout.CENTER);
 
 		status = new JLabel(calc.getOldAuthorAndVersion());

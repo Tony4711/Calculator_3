@@ -3,10 +3,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Collections;
 import java.util.Scanner;
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,7 +20,7 @@ public class SetInterface extends HexUserInterface {
 	private JTextField finalSet;
 	private JLabel finalSetLabel;
 	
-	private String finalSetValue;
+	private String finalSetValue = "";
 	
 	public SetInterface(CalcEngine engine) {
 		super(engine);
@@ -67,11 +64,13 @@ public class SetInterface extends HexUserInterface {
 		contentPane.add(setPanel, BorderLayout.EAST);
 		setPanelEnabled(setPanel, false);
 		
+		// /* Add new selection to the menu
 		operationMode.addItemListener((ItemListener) new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					if (operationMode.getSelectedItem().toString().equals(dropdownSelection[4])) {
-//						setPanelEnabled(hexButtonPanel, true);
+						setPanelEnabled(hexButtonPanel, false);
+						setPanelEnabled(operatorPanel, false);
 						setPanelEnabled(setPanel, true);
 						displayText1.setText(dropdownSelection[4]+"1");
 						displayText2.setText(dropdownSelection[4]+"2");
@@ -82,15 +81,16 @@ public class SetInterface extends HexUserInterface {
 						isHexRpn = false;
 						isSet = true;
 						command = "DEL";
-						checkOperator();
 					}else {
 						finalSetLabel.setText("");
 						setPanelEnabled(setPanel, false);
+						setPanelEnabled(operatorPanel, true);
 						}
 						
 				}
 			}
 		});
+		// */
 		frame.pack();
 	}
 	
@@ -176,8 +176,7 @@ public class SetInterface extends HexUserInterface {
 	}
 
 	private void set(Character c) {
-		if (!(c == '=')) {
-			if (!(command == "DEL") &&
+		if (!(command == "DEL") &&
 				!(command == "?") &&
 				!(command == "add to Set1") && 
 				!(command == "add to Set2") &&
@@ -193,7 +192,7 @@ public class SetInterface extends HexUserInterface {
 			
 			if (command == "add to Set1") 
 			{
-				Scanner scn = new Scanner(finalSetValue.replaceAll(",", " ").replace("{", " ").replace("}", " "));
+				Scanner scn = new Scanner(finalSetValue.replaceAll(",", " ").replace("(","").replace(")","").replace("{", " ").replace("}", " "));
 				while (scn.hasNextInt()) 
 				{
 					int i = scn.nextInt();
@@ -258,7 +257,7 @@ public class SetInterface extends HexUserInterface {
 				set2 = new SetAsList();
 				set3 = new SetAsList();
 			}
-		} 
+		
 		else
 		{
 			

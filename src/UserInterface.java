@@ -17,7 +17,7 @@ public class UserInterface implements ActionListener {
 
 	protected JFrame frame;
 	protected JTextField display;
-	private JLabel status;
+	protected JLabel status;
 	protected JPanel buttonPanel;
 	protected JPanel contentPane;
 	protected JButton negate;
@@ -48,6 +48,7 @@ public class UserInterface implements ActionListener {
 	 */
 	private void makeFrame() {
 		frame = new JFrame(calc.getTitle());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		contentPane = (JPanel) frame.getContentPane();
 		contentPane.setLayout(new BorderLayout(8, 8));
